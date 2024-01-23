@@ -21,7 +21,7 @@ if [ -e "$lock_file" ]; then
 
     if [ "$status" != "active" ]; then
 	echo "However, $service has run into '$status' state."
-	echo "You can check systemctl for details, or simply remove the lock file to enable a manual restart."
+	echo "You can check systemctl for details, or simply remove the lock file to perform manual restart."
 	echo "You can also try to access to the Minecraft server console, but chances are the server is down."
     echo "Latest screen session is recorded in '$screen_log'." 
 	while true; do
@@ -73,7 +73,7 @@ if [ -e "$lock_file" ]; then
 	        C|c)
 	            echo "Enter Ctrl+A then 'D' to return to terminal."
 	            sleep 3
-	            sudo -u charles screen -r minecraft
+	            sudo -u $USER screen -r minecraft
 	            #break
 	            ;;
 	        Q|q)
