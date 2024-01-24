@@ -31,9 +31,10 @@ else
             if [ -d "$path" ]; then
             echo "Path successfully set to $path ."
             fi
-            break;
+            break
         elif [ "$path" == "yes" ]; then
             path=/home/$USER/Minecraft
+            break
         fi
         echo "You should enter a path to the Minecraft directory, not a file, and do not add quotation marks."
         echo "You can also just type 'yes' to use /home/$USER/Minecraft ."
