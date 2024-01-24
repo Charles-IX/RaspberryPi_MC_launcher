@@ -68,7 +68,7 @@ fi
 
 ver_2=$(grep "ver=" $path/minecraft.sh | awk -F "ver=" '{print $2}')
 if [ "$ver_2" != "" ]; then
-    if [ "$(printf '%s\n' "$ver_2" "$ver" | sort -V | head -n1)" = "$ver_2" ]; then
+    if [ "$(printf '%s\n' "$ver_2" "$ver" | sort -V | head -n1)" = "$ver" ]; then
         if [ "$ver_2" != "$ver" ]; then
             echo "A newer version of Minecraft server launcher detected in $path/minecraft.sh ."
             echo "Current version: $ver"
