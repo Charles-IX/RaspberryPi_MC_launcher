@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.16.4
+ver=0.16.5
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -20,8 +20,17 @@ if [ -e "$config_file" ]; then
 else
     echo "Hello there,"
     echo "it seems that you are running the launcher for the first time."
+    echo "In order to function normally, the launcher will attempt to write a config file located in ~/.minecraft/raspi_mc_launcher_conf.sh ."
     echo ""
-    echo "In order to function normally, the launcher will attempt to write a config file located in ~/.minecraft/raspi_mc_launcher_conf.sh"
+    if [ ! -e "/home/$USER/.minecraft/" ]; then
+        mkdir /home/$USER/.minecraft/
+    elif [ ! -d "/home/$USER/.minecraft/" ]; then
+        echo "Unexpected incident: You have a .minecraft file in /home/$USER and it's not a directory."
+        echo "Can't write config file."
+        echo ""
+        exit 114
+    fi
+
     echo "Enter your path to the Minecraft directory, or type 'yes' (with no quote) to use the default ~/Minecraft ."
     while true; do
         IFS= read -r path
@@ -46,8 +55,9 @@ else
     else
         echo "Url input skipped."
     fi
-    touch $config_file
+    
     echo -e "path=$path\nlock_file=$path/lock\nremote_url=$url\n" > $config_file
+    echo ""
     echo "You can always start over by deleting $config_file ."
     echo "Now the launcher will attempt to copy itself to /usr/local/bin/mc so next time you can just type 'mc' to run the launcher."
     sudo cp -v $0 /usr/local/bin/mc
@@ -70,6 +80,7 @@ if [ "$ver_2" != "" ]; then
                     echo "Will attempt to upgrade /usr/local/bin/mc ."
                     sudo cp -v $path/minecraft.sh /usr/local/bin/mc
                     echo "Run the launcher again to use the newer version."
+                    echo ""
                     exit 0
                     ;;
                 N|n)
