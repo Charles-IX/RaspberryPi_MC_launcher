@@ -12,6 +12,7 @@ echo "==========================================="
 
 if (( EUID == 0)); then
     echo "The script must not be run as root."
+    echo ""
     exit 1
 fi
 
