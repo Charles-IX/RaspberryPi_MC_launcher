@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.16
+ver=0.16.3
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -21,37 +21,34 @@ else
     echo "Hello there,"
     echo "it seems that you are running the launcher for the first time."
     echo ""
-    echo "In order to function normally, the launcher will attempt to write a config file"
-    echo "located in ~/.minecraft/raspi_mc_launcher_conf.sh"
-    echo "Enter your path to the Minecraft directory, or type 'yes' (with no quote) to use the default"
-    echo "~/Minecraft"
+    echo "In order to function normally, the launcher will attempt to write a config file located in ~/.minecraft/raspi_mc_launcher_conf.sh"
+    echo "Enter your path to the Minecraft directory, or type 'yes' (with no quote) to use the default ~/Minecraft ."
     while true; do
         IFS= read -r path
-        if [ -e "$path" ]; then
-            if [ -d "$path" ]; then
-            echo "Path successfully set to $path ."
-            fi
-            break
-        elif [ "$path" == "yes" ]; then
+        if [ "$path" == "yes" ]; then
             path=/home/$USER/Minecraft
             break
+        elif [ -e "$path" ]; then
+            if [ -d "$path" ]; then
+                echo "Path successfully set to $path ."
+                break
+            fi
         fi
         echo "You should enter a path to the Minecraft directory, not a file, and do not add quotation marks."
         echo "You can also just type 'yes' to use /home/$USER/Minecraft ."
     done
-    echo "Then you can paste your remote url here so the launcher can remind you when the server has launched"
-    echo "like this: 'Connect <your url> remotely to join the game.'"
-    echo "...Or simply press Enter to skip this."
+    echo "Then you can paste your remote url here so the launcher can remind you when the server has launched like this: 'Connect <your url> remotely to join the game.'"
+    echo "...Or you can simply press Enter to skip this."
     read -r url
     if [ $url != "" ]; then
         echo "Url successfully set to $url ."
     else
         echo "Url input skipped."
     fi
+    touch $config_file
     echo -e "path=$path\nlock_file=$path/lock\nremote_url=$url\n" > $config_file
     echo "You can always start over by deleting $config_file ."
-    echo "Now the launcher will attempt to copy itself to /usr/local/bin/mc "
-    echo "so next time you can just type 'mc' to run the launcher."
+    echo "Now the launcher will attempt to copy itself to /usr/local/bin/mc so next time you can just type 'mc' to run the launcher."
     sudo cp -v $0 /usr/local/bin/mc
     echo ""
     source $config_file
