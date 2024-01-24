@@ -13,6 +13,7 @@ echo "==========================================="
 if (( EUID == 0)); then
     echo "The script must not be run as root."
     echo ""
+    echo ""
     exit 1
 fi
 
@@ -28,6 +29,7 @@ else
     elif [ ! -d "/home/$USER/.minecraft/" ]; then
         echo "Unexpected incident: You have a .minecraft file in /home/$USER and it's not a directory."
         echo "Can't write config file."
+        echo ""
         echo ""
         exit 114
     fi
@@ -83,6 +85,7 @@ if [ "$ver_2" != "" ]; then
                         echo "Will attempt to upgrade /usr/local/bin/mc ."
                         sudo cp -v $path/minecraft.sh /usr/local/bin/mc
                         echo "Run the launcher again to use the newer version."
+                        echo ""
                         echo ""
                         exit 0
                         ;;
