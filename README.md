@@ -4,7 +4,7 @@ Managing several MC Java servers on a RaspberryPi is troublesome. So I write thi
 
 
 ## What you should know
-~~All Minecraft instances and must be stored in ~/Minecraft~~ Users can now define their path to the directory which holds Minecraft instances (which I call "Minecraft folder" hereafter) on the first launch. Minecraft folder is also where I put the lock file, which contains the path to the currently running Minecraft server instance.
+~~All Minecraft instances and must be stored in \~/Minecraft~~ Users can now define their path to the directory which holds Minecraft instances (which I call "Minecraft folder" hereafter) on the first launch. Minecraft folder is also where I put the lock file, which contains the path to the currently running Minecraft server instance.
 
 The launcher needs to write a config file in ~/.minecraft and reads it on every launch.
 
