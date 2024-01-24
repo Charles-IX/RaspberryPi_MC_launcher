@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.16.5
+ver=0.16.6
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -47,6 +47,7 @@ else
         echo "You should enter a path to the Minecraft directory, not a file, and do not add quotation marks."
         echo "You can also just type 'yes' to use /home/$USER/Minecraft ."
     done
+    echo ""
     echo "Then you can paste your remote url here so the launcher can remind you when the server has launched like this: 'Connect <your url> remotely to join the game.'"
     echo "...Or you can simply press Enter to skip this."
     read -r url
@@ -67,29 +68,31 @@ fi
 
 ver_2=$(grep "ver=" $path/minecraft.sh | awk -F "ver=" '{print $2}')
 if [ "$ver_2" != "" ]; then
-    if (( ver_2 > ver )); then
-        echo "A newer version of Minecraft server launcher detected in $path/minecraft.sh ."
-        echo "Current version: $ver"
-        echo "New version: $ver_2"
-        echo "Upgrade /usr/local/bin/mc now?"
-        while true; do
-            echo "Yes, No?"
-            read -p "[ Y / N ]: " upgrade
-            case $upgrade in
-                Y|y)
-                    echo "Will attempt to upgrade /usr/local/bin/mc ."
-                    sudo cp -v $path/minecraft.sh /usr/local/bin/mc
-                    echo "Run the launcher again to use the newer version."
-                    echo ""
-                    exit 0
-                    ;;
-                N|n)
-                    echo "Upgrade skipped."
-                    break
-                    ;;
-            esac
-        done
-    echo ""
+    if [ "$(printf '%s\n' "$ver_2" "$ver" | sort -V | head -n1)" = "$ver_2" ]; then
+        if [ "$ver_2" != "$ver" ]; then
+            echo "A newer version of Minecraft server launcher detected in $path/minecraft.sh ."
+            echo "Current version: $ver"
+            echo "New version: $ver_2"
+            echo "Upgrade /usr/local/bin/mc now?"
+            while true; do
+                echo "Yes, No?"
+                read -p "[ Y / N ]: " upgrade
+                case $upgrade in
+                    Y|y)
+                        echo "Will attempt to upgrade /usr/local/bin/mc ."
+                        sudo cp -v $path/minecraft.sh /usr/local/bin/mc
+                        echo "Run the launcher again to use the newer version."
+                        echo ""
+                        exit 0
+                        ;;
+                    N|n)
+                        echo "Upgrade skipped."
+                        echo ""
+                        break
+                        ;;
+                esac
+            done
+        fi
     fi
 fi
 
