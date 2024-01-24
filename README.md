@@ -46,6 +46,15 @@ Finally run:
 ```
 
 
+
+## Usage
+If you have finished the ~~OOBE~~ first launch process, you can simply do:
+```bash
+mc
+```
+
+
+
 ## Update logs
 v0.10: 
 - The initial version of the project. 
