@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.16.3
+ver=0.16.4
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -27,6 +27,7 @@ else
         IFS= read -r path
         if [ "$path" == "yes" ]; then
             path=/home/$USER/Minecraft
+            echo "Path successfully set to $path ."
             break
         elif [ -e "$path" ]; then
             if [ -d "$path" ]; then
