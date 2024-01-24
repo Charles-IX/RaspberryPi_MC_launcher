@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.16.6
+ver=0.16.7
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -66,7 +66,7 @@ else
     source $config_file
 fi
 
-ver_2=$(grep "ver=" $path/minecraft.sh | awk -F "ver=" '{print $2}')
+ver_2=$(grep "ver=" $path/minecraft.sh | awk -F "ver=" '{print $2}' | head -n1)
 if [ "$ver_2" != "" ]; then
     if [ "$(printf '%s\n' "$ver_2" "$ver" | sort -V | head -n1)" = "$ver" ]; then
         if [ "$ver_2" != "$ver" ]; then
