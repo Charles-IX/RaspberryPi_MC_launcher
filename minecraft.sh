@@ -69,6 +69,7 @@ else
             echo "Unexpected parameter. Run 'mc -h' or 'mc --help' for help."
             echo ""
             exit 2
+            break
             ;;
     esac
 fi
