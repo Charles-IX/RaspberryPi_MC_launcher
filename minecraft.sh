@@ -54,7 +54,6 @@ else
                 echo "Run the launcher again by typing 'mc' in the terminal."
                 echo "If you are not running the latest version, you will be prompted to upgrade /usr/local/bin/mc ."
                 echo ""
-                echo ""
                 exit 0
             else
                 echo "Config file does not exist, don't know where to put minecraft.sh ."
@@ -66,8 +65,8 @@ else
         *)
             echo "Unexpected parameter. Run 'mc -h' or 'mc --help' for help."
             echo ""
-            echo ""
             exit 2
+            ;;
     esac
 fi
 
