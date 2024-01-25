@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.18.0
+ver=0.18.1
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
