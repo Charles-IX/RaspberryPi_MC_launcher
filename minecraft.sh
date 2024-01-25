@@ -62,6 +62,9 @@ else
                 break
             fi
             ;;
+        "")
+            break
+            ;;
         *)
             echo "Unexpected parameter. Run 'mc -h' or 'mc --help' for help."
             echo ""
