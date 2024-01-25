@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.18.1
+ver=0.18.2
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -59,17 +59,14 @@ else
                 echo "Config file does not exist, don't know where to put minecraft.sh ."
                 echo ""
                 # echo "Is this the first time you run the script? If so, run with no parameter to create a new config."
-                break
             fi
             ;;
         "")
-            break
             ;;
         *)
             echo "Unexpected parameter. Run 'mc -h' or 'mc --help' for help."
             echo ""
             exit 2
-            break
             ;;
     esac
 fi
