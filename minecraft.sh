@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.18.2
+ver=0.20.0
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -14,7 +14,6 @@ echo "==========================================="
 # Detect whether is running by root, if so, exit with code 1.
 if (( EUID == 0 )); then
     echo "The script must not be run as root."
-    echo ""
     echo ""
     exit 1
 fi
@@ -41,7 +40,6 @@ else
             echo "-h --help :  Print this help information."
             echo "-u --update :  Try to update minecraft.sh in your Minecraft folder using wget."
             echo ""
-            echo ""
             exit 0
             ;;
         "-u"|"--update")
@@ -50,7 +48,6 @@ else
             if [ -e "$config_file" ]; then
                 source $config_file
                 wget -O $path/minecraft.sh https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/minecraft.sh
-                echo ""
                 echo "Run the launcher again by typing 'mc' in the terminal."
                 echo "If you are not running the latest version, you will be prompted to upgrade /usr/local/bin/mc ."
                 echo ""
@@ -86,7 +83,6 @@ else
     elif [ ! -d "/home/$USER/.minecraft/" ]; then
         echo "Unexpected incident: You have a .minecraft file in /home/$USER and it's not a directory."
         echo "Can't write config file."
-        echo ""
         echo ""
         exit 114
     fi
@@ -125,6 +121,30 @@ else
     sudo cp -v $0 /usr/local/bin/mc
     echo ""
     source $config_file
+    if [ ! -e "$path/server.sh" ]; then
+        echo "Then let's set up the server list."
+        echo "A server.sh is needed in your Minecraft folder. Here is an example:"
+        wget https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh | cat
+        echo ""
+        echo "Do you wish to create one in your Minecraft folder?"
+        while true; do
+            echo "Yes, No?"
+            read -p "[ Y / N ]: " servers
+            case $servers in
+                Y|y)
+                    wget -O $path/server.sh https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh
+                    break
+                    ;;
+                N|n)
+                    echo "You will be prompted to create one later."
+                    break
+                    ;;
+                *)
+                    echo "Invalid option. Try again."
+                    ;;
+            esac
+        done
+    fi
 fi
 
 
@@ -148,7 +168,6 @@ if [ "$ver_2" != "" ]; then
                         echo ""
                         echo "Run the launcher again to use the newer version."
                         echo ""
-                        echo ""
                         exit 0
                         ;;
                     N|n)
@@ -156,10 +175,40 @@ if [ "$ver_2" != "" ]; then
                         echo ""
                         break
                         ;;
+                    *)
+                        echo "Invalid option. Try again."
                 esac
             done
         fi
     fi
+fi
+
+
+if [ ! -e "$path/server.sh" ]; then
+    echo "Server list does not exist."
+    echo "A server.sh is needed in your Minecraft folder. Here is an example:"
+    wget https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh | cat
+    echo ""
+    echo "Do you wish to create one in your Minecraft folder?"
+    while true; do
+        echo "Yes, No?"
+        read -p "[ Y / N ]: " servers
+        case $servers in
+            Y|y)
+                wget -O $path/server.sh https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh
+                break
+                ;;
+            N|n)
+                echo "Can't tell which servers are available without a proper server.sh ."
+                echo ""
+                exit 3
+                break
+                ;;
+            *)
+                echo "Invalid option. Try again."
+                ;;
+        esac
+    done
 fi
 
 
@@ -242,8 +291,7 @@ if [ -e "$lock_file" ]; then
 
 else    # In this section you can manually add your servers.
     echo "Please select one server to run."
-    echo "1. Minecraft 1.20.1 Forge"
-    echo "2. Minecraft 1.20.4 Vanilla"
+    source $path/server.sh
     echo "Enter a number between 1 and 2 or Q to quit."
 
     while true; do
@@ -251,15 +299,15 @@ else    # In this section you can manually add your servers.
 
         case $choice in
             1)
-                echo "Running Minecraft 1.20.1 Forge"
-       	        systemctl start minecraft_1.20.1
-	            systemctl status minecraft_1.20.1 --no-pager
+                echo "Running $name_1"
+       	        systemctl start $service_1
+	            systemctl status $service_1 --no-pager
 	            break
 	            ;;
             2)
-	            echo "Running Minecraft 1.20.4 Vanilla"
-	            systemctl start minecraft_1.20.4
-	            systemctl status minecraft_1.20.4 --no-pager
+	            echo "Running $name_2"
+	            systemctl start $service_2
+	            systemctl status $service_2 --no-pager
 	            break
 	            ;;
 	        Q|q)

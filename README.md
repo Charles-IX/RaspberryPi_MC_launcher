@@ -4,15 +4,14 @@ Managing several MC Java servers on a RaspberryPi is troublesome. So I write thi
 
 
 ## What you should know
-***The script is not ready to use out of the box. You should modify the script's final section according to your own requirements. Once you modified you should no longer use `mc -u` to upgrade so that your modification would not get recovered.***
-
-
-~~All Minecraft instances and must be stored in \~/Minecraft~~ Users can now define their path to the directory which holds Minecraft instances (Let's call it "Minecraft folder" hereafter) on the first launch. Minecraft folder is also where I put the lock file, which contains the path to the currently running Minecraft server instance.
+Users can define their path to the directory which holds Minecraft instances (Let's call it "Minecraft folder" hereafter) on the first launch. Minecraft folder is also where I put the lock file, which contains the path to the currently running Minecraft server instance.
 
 The launcher needs to write a config file in ~/.minecraft and reads it on every launch.
 
 The launcher manages instances using `systemctl`, for it's easier to control how the server would start and stop seprately using corresponding `.service` file.
 Examples can be found in the repo.
+
+Inside each instance folder, a text file named `service` is needed, it should contain the name of the `.service` file.
 
 I use `screen` to hold Minecraft server console so that historical information will be kept for later use.
 
@@ -72,6 +71,9 @@ mc -u
 
 
 ## Update logs
+v0.20:
+- The script can read server list from server.sh in the Minecraft folder.
+
 v0.18:
 - Added the function to handle parameters like '-h' or '-u'.
 
