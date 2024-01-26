@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.20.0
+ver=0.20.1
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -124,7 +124,8 @@ else
     if [ ! -e "$path/server.sh" ]; then
         echo "Then let's set up the server list."
         echo "A server.sh is needed in your Minecraft folder. Here is an example:"
-        wget https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh | cat
+        echo ""
+        wget -O - https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh | cat
         echo ""
         echo "Do you wish to create one in your Minecraft folder?"
         while true; do
@@ -133,6 +134,7 @@ else
             case $servers in
                 Y|y)
                     wget -O $path/server.sh https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh
+                    echo ""
                     break
                     ;;
                 N|n)
@@ -187,7 +189,8 @@ fi
 if [ ! -e "$path/server.sh" ]; then
     echo "Server list does not exist."
     echo "A server.sh is needed in your Minecraft folder. Here is an example:"
-    wget https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh | cat
+    echo ""
+    wget -O - https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh | cat
     echo ""
     echo "Do you wish to create one in your Minecraft folder?"
     while true; do
@@ -196,6 +199,7 @@ if [ ! -e "$path/server.sh" ]; then
         case $servers in
             Y|y)
                 wget -O $path/server.sh https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/server.sh
+                echo ""
                 break
                 ;;
             N|n)
