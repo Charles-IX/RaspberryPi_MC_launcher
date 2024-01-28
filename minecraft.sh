@@ -48,6 +48,7 @@ else
             if [ -e "$config_file" ]; then
                 source $config_file
                 wget -O $path/minecraft.sh https://raw.githubusercontent.com/Charles-IX/RaspberryPi_MC_launcher/main/minecraft.sh
+                echo ""
                 echo "Run the launcher again by typing 'mc' in the terminal."
                 echo "If you are not running the latest version, you will be prompted to upgrade /usr/local/bin/mc ."
                 echo ""
