@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver=0.20.1
+ver=0.20.2
 config_file=/home/$USER/.minecraft/raspi_mc_launcher_conf.sh
 
 trap 'echo "" && echo "" && exit 0' SIGINT
@@ -78,9 +78,9 @@ else
     echo "it seems that you are running the launcher for the first time."
     echo "In order to function normally, the launcher will attempt to write a config file located in ~/.minecraft/raspi_mc_launcher_conf.sh ."
     echo ""
-    if [ ! -e "/home/$USER/.minecraft/" ]; then
-        mkdir /home/$USER/.minecraft/
-    elif [ ! -d "/home/$USER/.minecraft/" ]; then
+    if [ ! -e "/home/$USER/.minecraft" ]; then
+        mkdir /home/$USER/.minecraft
+    elif [ ! -d "/home/$USER/.minecraft" ]; then
         echo "Unexpected incident: You have a .minecraft file in /home/$USER and it's not a directory."
         echo "Can't write config file."
         echo ""
